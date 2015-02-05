@@ -3,14 +3,15 @@
         "cmd": 1,
         "dist": 3,
         "head": 2,
-        "units": 4
+        "units": 4,
+        "target": 5
     },
     "capabilities": [
         "location",
         "configurable"
     ],
     "companyName": "Samuel Rinnetmaki",
-    "longName": "Back to target",
+    "longName": "Back to target plus",
     "projectType": "native",
     "resources": {
         "media": [
@@ -22,8 +23,8 @@
             }
         ]
     },
-    "shortName": "Get Back",
-    "uuid": "89f5b6e9-f87b-4b69-9d4e-f9f88de2f848",
+    "shortName": "Get Back Plus",
+    "uuid": "62bbc10d-70d2-41f4-bb0a-1d3dcf702ce4",
     "versionCode": 1,
     "versionLabel": "2.0",
     "watchapp": {

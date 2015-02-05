@@ -43,21 +43,33 @@ Pebble.addEventListener("ready", function(e) {
 
 Pebble.addEventListener("appmessage",
   function(e) {
-    if (e && e.payload && e.payload.cmd) {
-      console.log("Got command: " + e.payload.cmd);
-      switch (e.payload.cmd) {
-        case 'set':
-          storeCurrentPosition();
-          break;
-        case 'clear':
-          lat2 = null;
-          lon2 = null;
-          break;
-        case 'quit':
-          navigator.geolocation.clearWatch(locationWatcher);
-          break;
-        default:
-          console.log("Unknown command!");
+    if(e && e.payload) {
+      if (e.payload.cmd) {
+        console.log("Got command: " + e.payload.cmd);
+        switch (e.payload.cmd) {
+          case 'set':
+            storeCurrentPosition();
+            break;
+          case 'clear':
+            lat2 = null;
+            lon2 = null;
+            break;
+          case 'quit':
+            navigator.geolocation.clearWatch(locationWatcher);
+            break;
+          default:
+            console.log("Unknown command!");
+        }
+      }
+      if(e.payload.target) {
+        latlong = e.payload.target.split(",")
+        position = {
+          coords: {
+            latitude: parseFloat(latlong[0]),
+            longitude: parseFloat(latlong[1])
+          }
+        }
+        storeLocation(position);
       }
     }
   }

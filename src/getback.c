@@ -17,6 +17,7 @@ static const uint32_t CMD_KEY = 0x1;
 static const uint32_t HEAD_KEY = 0x2;
 static const uint32_t DIST_KEY = 0x3;
 static const uint32_t UNITS_KEY = 0x4;
+static const uint32_t TARGET_KEY = 0x5;
 static const char *set_cmd = "set";
 static const char *quit_cmd = "quit";
 static GPath *head_path;
@@ -116,7 +117,7 @@ void in_received_handler(DictionaryIterator *iter, void *context) {
     else {
       text_layer_set_text(unit_layer, "m");
     }
-    if (distance > 2900) {
+    if (distance > 9999) {
       if (strcmp(units, "imperial") == 0) {
         distance = (int) (distance / YARDS_IN_MILE);
         text_layer_set_text(unit_layer, "mi");
@@ -125,6 +126,18 @@ void in_received_handler(DictionaryIterator *iter, void *context) {
         distance = (int) (distance / 1000);
         text_layer_set_text(unit_layer, "km");
       }
+    }
+  }
+  Tuple *target_tuple = dict_find(iter, TARGET_KEY);
+  if (target_tuple) {
+    // just redirect the message to iPhone/Android.
+    DictionaryIterator *iter2;
+    app_message_outbox_begin(&iter2);
+    if (iter2 == NULL) {
+      APP_LOG(APP_LOG_LEVEL_WARNING, "Can not send target to phone!");
+    }else{
+      dict_write_cstring(iter2, TARGET_KEY, target_tuple->value->cstring);
+      app_message_outbox_send();
     }
   }
   static char dist_text[9];
