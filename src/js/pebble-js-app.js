@@ -8,7 +8,7 @@ var lon2;
 var head = 0;
 var dist = 0;
 var units = "metric";
-var R = 6378137; // m
+var R = 6376772.71; // m
 var locationWatcher;
 var locationInterval;
 var locationOptions = {timeout: 15000, maximumAge: 1000, enableHighAccuracy: true };
